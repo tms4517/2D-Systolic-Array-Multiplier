@@ -7,8 +7,9 @@ module PE
   , input  var logic [7:0] i_a
   , input  var logic [7:0] i_b
 
-  , output var logic [7:0] o_a
-  , output var logic [7:0] o_b
+  , output var logic [7:0]  o_a
+  , output var logic [7:0]  o_b
+  , output var logic [15:0] o_c
   );
 
   // {{{ MAC
@@ -28,6 +29,9 @@ module PE
 
   always_comb
     mac_d = mac_q + mult;
+
+  always_comb
+    o_c = mac_q;
 
   // }}} MAC
 
