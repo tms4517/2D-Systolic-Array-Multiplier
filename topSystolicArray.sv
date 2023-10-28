@@ -37,6 +37,9 @@ module topSystolicArray
 
   // }}} Store valid inputs
 
+  // Note: Storing the inputs is not necessary and the rows and columns can be
+  // set-up directly from the inputs.
+
   // {{{ Set-up rows and columns
 
   // The rows are inputs to the PEs in the first column.
