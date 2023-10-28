@@ -9,7 +9,7 @@ module PE
 
   , output var logic [7:0]  o_a
   , output var logic [7:0]  o_b
-  , output var logic [15:0] o_c
+  , output var logic [15:0] o_y
   );
 
   // {{{ MAC
@@ -31,7 +31,7 @@ module PE
     mac_d = mac_q + mult;
 
   always_comb
-    o_c = mac_q;
+    o_y = mac_q;
 
   // }}} MAC
 
