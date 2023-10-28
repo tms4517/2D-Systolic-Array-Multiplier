@@ -37,8 +37,23 @@ module topSystolicArray
 
   // }}} Store valid inputs
 
+  // {{{ Set-up rows and columns
 
+  // The rows are inputs to the PEs in the first column.
+  // The columns are inputs to the PEs in the first row.
+  logic [3:0][6:0][7:0] row_q, col_q;
 
+  for (genvar i = 0; i < 4; i++) begin: la_perRowCol
+
+    always_ff @(posedge i_clk)
+      row_q[i] <= ({24'b0, a_q} << i*8);
+
+    always_ff @(posedge i_clk)
+      col_q[i] <= ({24'b0, b_q[0][i], b_q[1][i], b_q[2][i], b_q[3][i]} << i*8);
+
+  end: la_perRowCol
+
+  // }}} Set-up rows and columns
 
 endmodule
 
