@@ -1,6 +1,6 @@
 `default_nettype none
 
-module PE
+module pe
   ( input  var logic       i_clk
   , input  var logic       i_arst
 
