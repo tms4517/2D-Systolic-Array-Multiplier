@@ -94,7 +94,7 @@ module systolicArray
       // Element group E.
       // PEs receives input B from the col matrix and input A from the PE on its
       // LHS.
-      else if ((i == 0) && (0 < j < 3)) begin: la_ElementE
+      else if ((i == 0) && (0 < j) && (j < 3)) begin: la_ElementE
 
         pe u_pe
         ( .i_clk
@@ -113,7 +113,7 @@ module systolicArray
       // Element group F.
       // PEs receives input A from the PE on its LHS and input B from the PE
       // directly above it. Output A is left unconnected.
-      else if ((0 < i < 3) && (j == 3)) begin: la_ElementF
+      else if ((0 < i) && (i < 3) && (j == 3)) begin: la_ElementF
 
         pe u_pe
         ( .i_clk
@@ -132,7 +132,7 @@ module systolicArray
       // Element group G.
       // PEs receives input B from the PE above it and input A from the PE on its
       // LHS. Output B is left unconnected.
-      else if ((i == 3) && (0 < j < 3)) begin: la_ElementG
+      else if ((i == 3) && (0 < j ) && (j < 3)) begin: la_ElementG
 
         pe u_pe
         ( .i_clk
@@ -151,7 +151,7 @@ module systolicArray
       // Element group H.
       // PEs receives input A from the row matrix and input B from the PE directly
       // above it.
-      else if ((0 < i < 3) && (j == 0)) begin: la_ElementH
+      else if ((0 < i) && (i < 3) && (j == 0)) begin: la_ElementH
 
         pe u_pe
         ( .i_clk
@@ -171,7 +171,7 @@ module systolicArray
       // PEs receives input B from the PE above it and input A from the PE on its
       // LHS. Output A is connected to the PE on it RHS and output B is connected
       // to the PE below it.
-      else if ((0 < i < 3) && (0 < j < 3)) begin: la_ElementI
+      else if ((0 < i ) && (i < 3) && (0 < j ) && (j < 3)) begin: la_ElementI
 
         pe u_pe
         ( .i_clk
