@@ -32,7 +32,7 @@ module systolicArray
         , .o_y (o_c[0][0])
         );
 
-      end: la_Row0Col0
+      end: la_ElementA
 
       // Element group B.
       // PE receives input B from the col matrix and input A from the PE on its
@@ -187,8 +187,8 @@ module systolicArray
 
       end: la_ElementI
 
-    end: la_PerRow
-  end: la_PerCol
+    end: la_PerCol
+  end: la_PerRow
 
 endmodule
 
