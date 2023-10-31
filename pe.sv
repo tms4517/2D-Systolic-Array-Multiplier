@@ -52,10 +52,10 @@ module pe
       b_q <= i_b;
 
   always_comb
-    o_a = i_a;
+    o_a = a_q;
 
   always_comb
-    o_b = i_b;
+    o_b = b_q;
 
   // }}} Register inputs and assign them to outputs
 
