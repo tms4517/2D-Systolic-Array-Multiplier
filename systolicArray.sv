@@ -119,11 +119,11 @@ module systolicArray
         ( .i_clk
         , .i_arst
 
-        , .i_a (rowInterConnect[i][3])
+        , .i_a (rowInterConnect[i][2])
         , .i_b (colInterConnect[i-1][3])
 
         , .o_a ()
-        , .o_b (colInterConnect[i][0])
+        , .o_b (colInterConnect[i][3])
         , .o_y (o_c[i][3])
         );
 
@@ -139,7 +139,7 @@ module systolicArray
         , .i_arst
 
         , .i_a (rowInterConnect[3][j-1])
-        , .i_b (colInterConnect[i-1][j])
+        , .i_b (colInterConnect[2][j])
 
         , .o_a (rowInterConnect[3][j])
         , .o_b ()
