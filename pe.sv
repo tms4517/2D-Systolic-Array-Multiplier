@@ -1,11 +1,11 @@
 `default_nettype none
 
 module pe
-  ( input  var logic       i_clk
-  , input  var logic       i_arst
+  ( input  var logic        i_clk
+  , input  var logic        i_arst
 
-  , input  var logic [7:0] i_a
-  , input  var logic [7:0] i_b
+  , input  var logic [7:0]  i_a
+  , input  var logic [7:0]  i_b
 
   , output var logic [7:0]  o_a
   , output var logic [7:0]  o_b
