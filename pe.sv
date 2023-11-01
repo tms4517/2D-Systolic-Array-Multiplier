@@ -1,3 +1,6 @@
+// This module implements a Processing Element (PE). It performs an 8-bit
+// multiply-accumulate operation.
+
 `default_nettype none
 
 module pe
