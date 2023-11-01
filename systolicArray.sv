@@ -94,7 +94,7 @@ module systolicArray
       // Element group E.
       // PEs receives input B from the col matrix and input A from the PE on its
       // LHS.
-      else if ((i == 0) && (0 < j) && (j < 3)) begin: la_ElementE
+      if ((i == 0) && (0 < j) && (j < 3)) begin: la_ElementE
 
         pe u_pe
         ( .i_clk
