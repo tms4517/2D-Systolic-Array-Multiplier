@@ -106,6 +106,15 @@ module topSystolicArray
 
   // }}} Set-up rows and columns matrices
 
+  systolicArray u_systolicArray
+  ( .i_clk
+  , .i_arst
+
+  , i_row (row_q)
+  , i_col (col_q)
+
+  , o_c
+  );
 endmodule
 
 `resetall
