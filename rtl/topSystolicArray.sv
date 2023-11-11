@@ -27,7 +27,9 @@ module topSystolicArray
       counter_q <= counter_d;
 
   always_comb
-    if (i_validInput)
+    if (doProcess_d == '1)
+      counter_d = counter_q + 1'b1;
+    else
       counter_d = '0;
     else
       counter_d = counter_q + 1'b1;
