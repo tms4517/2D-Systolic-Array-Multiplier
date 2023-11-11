@@ -31,11 +31,19 @@ module topSystolicArray
       counter_d = counter_q + 1'b1;
     else
       counter_d = '0;
+
+  logic validResult_q;
+
+  always_ff @(posedge i_clk, posedge i_arst)
+    if (i_arst)
+      validResult_q <= '0;
+    else if (counter_q == 4'd10)
+      validResult_q <= '1;
     else
-      counter_d = counter_q + 1'b1;
+      validResult_q <= '0;
 
   always_comb
-    o_validResult = (counter_q == 4'd10) ? '1 : '0;
+    o_validResult = validResult_q;
 
   // }}} Control counter
 
