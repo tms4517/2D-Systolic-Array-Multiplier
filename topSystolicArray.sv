@@ -18,7 +18,7 @@ module topSystolicArray
   // This counter is used to determine when to assert o_validResult and sets up
   // the necessary control signals.
 
-  logic [x:0] counter_d, counter_q;
+  logic [3:0] counter_d, counter_q;
 
   always_ff @(posedge i_clk, posedge i_arst)
     if (i_arst)
@@ -33,7 +33,7 @@ module topSystolicArray
       counter_d = counter_q + 1'b1;
 
   always_comb
-    o_validResult = (counter_q == max) ? '1 : '0;
+    o_validResult = (counter_q == 4'd10) ? '1 : '0;
 
   logic doProcess;
 
@@ -51,10 +51,12 @@ module topSystolicArray
       doProcess_q <= doProcess_d;
 
   always_comb
-    if (validInput)
-      doProcess_q <= '1;
-    else if (counter_q == max)
-      doProcess_q <= '1;
+    if (i_validInput)
+      doProcess_d = '1;
+    else if (counter_q == 4'd10)
+      doProcess_d = '1;
+    else
+      doProcess_d = doProcess_q;
 
   // }}} Systolic array clock gate
 
