@@ -20,6 +20,8 @@ module systolicArray
   ( input  var logic                 i_clk
   , input  var logic                 i_arst
 
+  , input  var logic                 i_doProcess
+
   , input  var logic [3:0][6:0][7:0] i_row
   , input  var logic [3:0][6:0][7:0] i_col
 
@@ -54,6 +56,8 @@ module systolicArray
       pe u_pe
       ( .i_clk
       , .i_arst
+
+      , .i_doProcess
 
       , .i_a (rowInterConnect[i][j])
       , .i_b (colInterConnect[i][j])
