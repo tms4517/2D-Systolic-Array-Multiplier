@@ -82,9 +82,9 @@ module topSystolicArray
 
     always_comb
       if (i_validInput)
-        row_d[i] = {24'b0, a_q[i] << i*8};
+        row_d[i] = {24'b0, i_a[i]} << i*8;
       else if (counter_q != '0)
-        row_d[i] = {1'b0, row_d[i] >> 8};
+        row_d[i] = row_d[i] >> 8;
       else
         row_d[i] = row_q[i];
 
@@ -96,9 +96,9 @@ module topSystolicArray
 
     always_comb
       if (i_validInput)
-        col_d[i] = {24'b0, b_q[0][i], b_q[1][i], b_q[2][i], b_q[3][i]} << i*8};
+        col_d[i] = {24'b0, i_b[0][i], i_b[1][i], i_b[2][i], i_b[3][i]} << i*8;
       else if (counter_q != '0)
-        col_d[i] = {1'b0, col_d[i] >> 8};
+        col_d[i] = col_d[i] >> 8;
       else
         col_d[i] = col_q[i];
 
@@ -110,10 +110,12 @@ module topSystolicArray
   ( .i_clk
   , .i_arst
 
-  , i_row (row_q)
-  , i_col (col_q)
+  , .i_doProcess (doProcess_q)
 
-  , o_c
+  , .i_row (row_q)
+  , .i_col (col_q)
+
+  , .o_c
   );
 endmodule
 

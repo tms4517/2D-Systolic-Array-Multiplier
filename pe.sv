@@ -7,6 +7,8 @@ module pe
   ( input  var logic        i_clk
   , input  var logic        i_arst
 
+  , input  var logic        i_doProcess
+
   , input  var logic [7:0]  i_a
   , input  var logic [7:0]  i_b
 
@@ -31,7 +33,10 @@ module pe
       mac_q <= mac_d;
 
   always_comb
-    mac_d = mac_q + mult;
+    if (i_doProcess)
+      mac_d = mac_q + mult;
+    else
+      mac_d = mac_q;
 
   always_comb
     o_y = mac_q;
@@ -45,14 +50,18 @@ module pe
   always_ff @(posedge i_clk, posedge i_arst)
     if (i_arst)
       a_q <= '0;
-    else
+    else if (i_doProcess)
       a_q <= i_a;
+    else
+      a_q <= a_q;
 
   always_ff @(posedge i_clk, posedge i_arst)
     if (i_arst)
       b_q <= '0;
-    else
+    else if (i_doProcess)
       b_q <= i_b;
+    else
+      b_q <= b_q;
 
   always_comb
     o_a = a_q;
