@@ -35,8 +35,6 @@ module topSystolicArray
   always_comb
     o_validResult = (counter_q == 4'd10) ? '1 : '0;
 
-  logic doProcess;
-
   // }}} Control counter
 
   // {{{ Systolic array clock gate
