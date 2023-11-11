@@ -40,7 +40,6 @@ module topSystolicArray
   // }}} Control counter
 
   // {{{ Systolic array clock gate
-  // A 1 bit FSM is instatiated that acts as a clock gate to the systolic array.
 
   logic doProcess_d, doProcess_q;
 
