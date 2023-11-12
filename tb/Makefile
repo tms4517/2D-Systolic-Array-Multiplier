@@ -37,7 +37,7 @@ waveform.vcd: ./obj_dir/V$(TOP_MODULE)
 
 .PHONY: lint
 lint: $(RTL_PATH)/$(TOP_MODULE).sv
-	verilator --lint-only $(RTL_PATH)/$(TOP_MODULE).sv
+	verilator --lint-only -I../rtl/ $(RTL_PATH)/$(TOP_MODULE).sv
 
 .PHONY: clean
 clean:
