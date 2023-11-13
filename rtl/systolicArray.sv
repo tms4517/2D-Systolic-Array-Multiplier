@@ -64,7 +64,7 @@ module systolicArray
 
       , .o_a (rowInterConnect[i][j+1])
       , .o_b (colInterConnect[i+1][j])
-      , .o_y (o_c[i][i])
+      , .o_y (o_c[i][j])
       );
 
     end: la_PerCol
