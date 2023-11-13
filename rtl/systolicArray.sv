@@ -46,7 +46,7 @@ module systolicArray
     // These are dummy interconnects used to pass data  from the col matrices to
     // the i_b ports of PE in the first row.
     always_comb
-      colInterConnect[0][i] = i_col[0][i];
+      colInterConnect[0][i] = i_col[i][0];
 
   end: la_PerDummyRowColInterconnect
 

@@ -105,7 +105,7 @@ module topSystolicArray
 
     always_comb
       if (i_validInput)
-        col_d[i] = {24'b0, i_b[i][3], i_b[i][2], i_b[i][1], i_b[i][0]} << i*8;
+        col_d[i] = {24'b0, i_b[0][3-i], i_b[1][3-i], i_b[2][3-i], i_b[3][3-i]} << i*8;
       else if (counter_q != '0)
         col_d[i] = col_q[i] >> 8;
       else
