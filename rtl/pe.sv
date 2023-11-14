@@ -29,10 +29,11 @@ module pe
   always_ff @(posedge i_clk, posedge i_arst)
     if (i_arst)
       mac_q <= '0;
-    else if (i_doProcess)
-      mac_q <= mac_q + mult;
     else
-      mac_q <= mac_q;
+      mac_q <= mac_d;
+
+  always_comb
+    mac_d = (i_doProcess) ? mac_q + mult : '0;
 
   always_comb
     o_y = mac_q;

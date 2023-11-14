@@ -60,7 +60,7 @@ module topSystolicArray
   always_comb
     if (i_validInput)
       doProcess_d = '1;
-    else if (counter_q == 4'd10)
+    else if (counter_q == 4'd11)
       doProcess_d = '0;
     else
       doProcess_d = doProcess_q;
