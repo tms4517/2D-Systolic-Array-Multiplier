@@ -39,6 +39,31 @@ void toggle_i_validInput(VtopSystolicArray *dut)
   }
 }
 
+void driveInputMatrices(VtopSystolicArray *dut)
+{
+  dut->i_a[0] = 0;
+  dut->i_a[1] = 0;
+  dut->i_a[2] = 0;
+  dut->i_a[3] = 0;
+  dut->i_b[0] = 0;
+  dut->i_b[1] = 0;
+  dut->i_b[2] = 0;
+  dut->i_b[3] = 0;
+
+  if ((posedge_cnt%15 == 0) && (sim_time >= RESET_NEG_EDGE))
+  {
+    dut->i_a[0] = 0x01010101;
+    dut->i_a[1] = 0x01010101;
+    dut->i_a[2] = 0x01010101;
+    dut->i_a[3] = 0x01010101;
+
+    dut->i_b[0] = 0x01010101;
+    dut->i_b[1] = 0x01010101;
+    dut->i_b[2] = 0x01010101;
+    dut->i_b[3] = 0x01010101;
+  }
+}
+
 int main(int argc, char** argv, char** env)
 {
   srand (time(NULL));
@@ -67,6 +92,7 @@ int main(int argc, char** argv, char** env)
       posedge_cnt++;
 
       toggle_i_validInput(dut);
+      driveInputMatrices(dut);
     }
 
     // Write all the traced signal values into the waveform dump file.
