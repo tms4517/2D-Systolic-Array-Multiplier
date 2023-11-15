@@ -8,7 +8,7 @@
 #include "VtopSystolicArray.h" // Verilated DUT.
 
 #define MAX_SIM_TIME 100  // Number of clk edges.
-#define RESET_NEG_EDGE 2  // Clk edge number to deassert arst.
+#define RESET_NEG_EDGE 5  // Clk edge number to deassert arst.
 
 #define VERIF_START_TIME 7
 
@@ -18,11 +18,11 @@ vluint64_t posedge_cnt = 0;
 // Assert arst only on the first clock edge.
 // Note: By default all signals are initialized to 0, so there's no need to drive
 // the other inputs to '0.
-void dut_reset (VtopSystolicArray *dut, vluint64_t &sim_time)
+void dut_reset (VtopSystolicArray *dut)
 {
   dut->i_arst = 0;
 
-  if (sim_time <= 2)
+  if ((sim_time > 2) && (sim_time < RESET_NEG_EDGE))
   {
     dut->i_arst = 1;
   }
@@ -56,6 +56,8 @@ int main(int argc, char** argv, char** env)
 
   while (sim_time < MAX_SIM_TIME)
   {
+    dut_reset(dut);
+
     dut->i_clk ^= 1; // Toggle clk to create pos and neg edge.
 
     dut->eval(); // Evaluate all the signals in the DUT on each clock edge.
@@ -64,7 +66,6 @@ int main(int argc, char** argv, char** env)
     {
       posedge_cnt++;
 
-      dut_reset(dut, sim_time);
       toggle_i_validInput(dut);
     }
 
