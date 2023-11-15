@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include <cstdlib>
+#include <iomanip>
 
 #include <verilated.h>         // Common verilator routines.
 #include <verilated_vcd_c.h>   // Write waverforms to a VCD file.
@@ -64,6 +65,56 @@ void driveInputMatrices(VtopSystolicArray *dut)
   }
 }
 
+void verifyOutputMatrix(VtopSystolicArray *dut)
+{
+  if ((dut->o_validResult == 1) && (sim_time >= VERIF_START_TIME))
+  {
+    // Note: Verilator represents the output matrix as 8 32 bit arrays.
+
+    vluint32_t resultMatrix[8];
+
+    resultMatrix[0] = 0x00040004;
+    resultMatrix[1] = 0x00040004;
+    resultMatrix[2] = 0x00040004;
+    resultMatrix[3] = 0x00040004;
+    resultMatrix[4] = 0x00040004;
+    resultMatrix[5] = 0x00040004;
+    resultMatrix[6] = 0x00040004;
+    resultMatrix[7] = 0x00040004;
+
+    if ((dut->o_c[0] != resultMatrix[0]) || (dut->o_c[1] != resultMatrix[1]) ||
+        (dut->o_c[2] != resultMatrix[2]) || (dut->o_c[3] != resultMatrix[3]) ||
+        (dut->o_c[4] != resultMatrix[4]) || (dut->o_c[5] != resultMatrix[5]) ||
+        (dut->o_c[6] != resultMatrix[6]) || (dut->o_c[7] != resultMatrix[7]))
+    {
+      std::cout << "ERROR: o_c is incorrect." << std::endl;
+
+      std::cout << "Expected:"                 << std::endl;
+      std::cout << std::hex << resultMatrix[0] << std::endl;
+      std::cout << std::hex << resultMatrix[1] << std::endl;
+      std::cout << std::hex << resultMatrix[2] << std::endl;
+      std::cout << std::hex << resultMatrix[3] << std::endl;
+      std::cout << std::hex << resultMatrix[4] << std::endl;
+      std::cout << std::hex << resultMatrix[5] << std::endl;
+      std::cout << std::hex << resultMatrix[6] << std::endl;
+      std::cout << std::hex << resultMatrix[7] << std::endl;
+
+      std::cout << "Received:"                                                               << std::endl;
+      std::cout << std::hex << std::setw(16) << std::setfill('0') << (vluint32_t)dut->o_c[0] << std::endl;
+      std::cout << std::hex << std::setw(16) << std::setfill('0') << (vluint32_t)dut->o_c[1] << std::endl;
+      std::cout << std::hex << std::setw(16) << std::setfill('0') << (vluint32_t)dut->o_c[2] << std::endl;
+      std::cout << std::hex << std::setw(16) << std::setfill('0') << (vluint32_t)dut->o_c[3] << std::endl;
+      std::cout << std::hex << std::setw(16) << std::setfill('0') << (vluint32_t)dut->o_c[4] << std::endl;
+      std::cout << std::hex << std::setw(16) << std::setfill('0') << (vluint32_t)dut->o_c[5] << std::endl;
+      std::cout << std::hex << std::setw(16) << std::setfill('0') << (vluint32_t)dut->o_c[6] << std::endl;
+      std::cout << std::hex << std::setw(16) << std::setfill('0') << (vluint32_t)dut->o_c[7] << std::endl;
+
+      std::cout << " simtime: " << (int)sim_time << std::endl;
+      std::cout << "*********************************************" << std::endl;
+    }
+  }
+}
+
 int main(int argc, char** argv, char** env)
 {
   srand (time(NULL));
@@ -93,6 +144,7 @@ int main(int argc, char** argv, char** env)
 
       toggle_i_validInput(dut);
       driveInputMatrices(dut);
+      verifyOutputMatrix(dut);
     }
 
     // Write all the traced signal values into the waveform dump file.
