@@ -25,7 +25,7 @@ module systolicArray
   , input  var logic [3:0][6:0][7:0] i_row
   , input  var logic [3:0][6:0][7:0] i_col
 
-  , output var logic [3:0][3:0][15:0] o_c
+  , output var logic [3:0][3:0][31:0] o_c
   );
 
   // Variable used to pass data horizontally between PEs in the same row. The

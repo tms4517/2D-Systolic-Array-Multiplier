@@ -14,17 +14,17 @@ module pe
 
   , output var logic [7:0]  o_a
   , output var logic [7:0]  o_b
-  , output var logic [15:0] o_y
+  , output var logic [31:0] o_y
   );
 
   // {{{ MAC
 
-  logic [15:0] mult;
+  logic [31:0] mult;
 
   always_comb
     mult = i_a*i_b;
 
-  logic [15:0] mac_d, mac_q;
+  logic [31:0] mac_d, mac_q;
 
   always_ff @(posedge i_clk, posedge i_arst)
     if (i_arst)

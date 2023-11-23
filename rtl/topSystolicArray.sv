@@ -9,7 +9,7 @@ module topSystolicArray
 
   , input  var logic                 i_validInput
 
-  , output var logic [3:0][3:0][15:0] o_c
+  , output var logic [3:0][3:0][31:0] o_c
 
   , output var logic                 o_validResult
   );
