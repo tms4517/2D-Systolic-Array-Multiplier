@@ -13,8 +13,13 @@
 
 #define VERIF_START_TIME 7
 
+#define N 4 // Square matrix dimension
 vluint64_t sim_time    = 0;
 vluint64_t posedge_cnt = 0;
+
+uint32_t matrixA[N][N];
+uint32_t matrixB[N][N];
+uint32_t matrixC[N][N];
 
 // Assert arst only on the first clock edge.
 // Note: By default all signals are initialized to 0, so there's no need to drive
