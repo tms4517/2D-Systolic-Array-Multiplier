@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <iomanip>
+#include <cmath>
 
 #include <verilated.h>         // Common verilator routines.
 #include <verilated_vcd_c.h>   // Write waverforms to a VCD file.
@@ -14,6 +15,11 @@
 #define VERIF_START_TIME 7
 
 #define N 4 // Square matrix dimension
+#define WIDTH 8
+
+// Calculate max value of an element.
+const int maxValue = std::pow(2, WIDTH);
+
 vluint64_t sim_time    = 0;
 vluint64_t posedge_cnt = 0;
 
@@ -106,6 +112,7 @@ void driveInputMatrices(VtopSystolicArray *dut)
   dut->i_a[1] = 0;
   dut->i_a[2] = 0;
   dut->i_a[3] = 0;
+
   dut->i_b[0] = 0;
   dut->i_b[1] = 0;
   dut->i_b[2] = 0;
@@ -131,6 +138,20 @@ void driveInputMatrices(VtopSystolicArray *dut)
     }
   }
 }
+
+void calculateResultMatrix()
+{
+  for (int i = 0; i < N; ++i)
+  {
+    for (int j = 0; j < N; ++j)
+    {
+        matrixC[i][j] = 0;
+
+        for (int k = 0; k < N; ++k)
+        {
+            matrixC[i][j] += matrixA[i][k] * matrixB[k][j];
+        }
+    }
   }
 }
 
@@ -138,45 +159,31 @@ void verifyOutputMatrix(VtopSystolicArray *dut)
 {
   if ((dut->o_validResult == 1) && (sim_time >= VERIF_START_TIME))
   {
-    // Note: Verilator represents the output matrix as 8 32 bit arrays.
+    calculateResultMatrix();
+    displayMatrix('C');
 
-    vluint32_t resultMatrix[8];
+    // Note: Verilator represents the output matrix as 16 32 bit arrays.
+    bool incorrect = false;
 
-    resultMatrix[0] = 0x00040004;
-    resultMatrix[1] = 0x00040004;
-    resultMatrix[2] = 0x00040004;
-    resultMatrix[3] = 0x00040004;
-    resultMatrix[4] = 0x00040004;
-    resultMatrix[5] = 0x00040004;
-    resultMatrix[6] = 0x00040004;
-    resultMatrix[7] = 0x00040004;
-
-    if ((dut->o_c[0] != resultMatrix[0]) || (dut->o_c[1] != resultMatrix[1]) ||
-        (dut->o_c[2] != resultMatrix[2]) || (dut->o_c[3] != resultMatrix[3]) ||
-        (dut->o_c[4] != resultMatrix[4]) || (dut->o_c[5] != resultMatrix[5]) ||
-        (dut->o_c[6] != resultMatrix[6]) || (dut->o_c[7] != resultMatrix[7]))
+    for (int i = 0; i < N; ++i)
     {
-      std::cout << "ERROR: o_c is incorrect." << std::endl;
+      for (int j = 0; j < N; ++j)
+      {
+        if(dut->o_c[(N*i) + j] != matrixC[i][j])
+        {
+          incorrect = true;
+        }
+      }
+    }
 
-      std::cout << "Expected:"                 << std::endl;
-      std::cout << std::hex << resultMatrix[0] << std::endl;
-      std::cout << std::hex << resultMatrix[1] << std::endl;
-      std::cout << std::hex << resultMatrix[2] << std::endl;
-      std::cout << std::hex << resultMatrix[3] << std::endl;
-      std::cout << std::hex << resultMatrix[4] << std::endl;
-      std::cout << std::hex << resultMatrix[5] << std::endl;
-      std::cout << std::hex << resultMatrix[6] << std::endl;
-      std::cout << std::hex << resultMatrix[7] << std::endl;
+    if (incorrect)
+    {
+      std::cout << "ERROR: result matrix is incorrect." << std::endl;
 
-      std::cout << "Received:"                                                               << std::endl;
-      std::cout << std::hex << std::setw(16) << std::setfill('0') << (vluint32_t)dut->o_c[0] << std::endl;
-      std::cout << std::hex << std::setw(16) << std::setfill('0') << (vluint32_t)dut->o_c[1] << std::endl;
-      std::cout << std::hex << std::setw(16) << std::setfill('0') << (vluint32_t)dut->o_c[2] << std::endl;
-      std::cout << std::hex << std::setw(16) << std::setfill('0') << (vluint32_t)dut->o_c[3] << std::endl;
-      std::cout << std::hex << std::setw(16) << std::setfill('0') << (vluint32_t)dut->o_c[4] << std::endl;
-      std::cout << std::hex << std::setw(16) << std::setfill('0') << (vluint32_t)dut->o_c[5] << std::endl;
-      std::cout << std::hex << std::setw(16) << std::setfill('0') << (vluint32_t)dut->o_c[6] << std::endl;
-      std::cout << std::hex << std::setw(16) << std::setfill('0') << (vluint32_t)dut->o_c[7] << std::endl;
+      for (int i = 0; i < N*N; i++)
+      {
+        std::cout << std::hex << dut->o_c[i] << std::endl;
+      }
 
       std::cout << " simtime: " << (int)sim_time << std::endl;
       std::cout << "*********************************************" << std::endl;
