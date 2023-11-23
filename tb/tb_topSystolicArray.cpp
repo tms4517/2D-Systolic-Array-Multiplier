@@ -9,7 +9,7 @@
 
 #include "VtopSystolicArray.h" // Verilated DUT.
 
-#define MAX_SIM_TIME 100  // Number of clk edges.
+#define MAX_SIM_TIME 500  // Number of clk edges.
 #define RESET_NEG_EDGE 5  // Clk edge number to deassert arst.
 
 #define VERIF_START_TIME 7
