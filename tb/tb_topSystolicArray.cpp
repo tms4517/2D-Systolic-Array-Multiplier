@@ -45,6 +45,49 @@ void toggle_i_validInput(VtopSystolicArray *dut)
   }
 }
 
+void displayMatrix(char matrix)
+{
+  if (matrix == 'A')
+  {
+    std::cout << std::endl;
+    std::cout << "Matrix A " << std::endl;
+    for (int i = 0; i < N; ++i)
+    {
+      for (int j = 0; j < N; ++j)
+      {
+          std::cout << std::hex << matrixA[i][j] << "\t";
+      }
+      std::cout << std::endl;
+    }
+  }
+  else if (matrix == 'B')
+  {
+    std::cout << std::endl;
+    std::cout << "Matrix B " << std::endl;
+    for (int i = 0; i < N; ++i)
+    {
+      for (int j = 0; j < N; ++j)
+      {
+          std::cout << std::hex << matrixB[i][j] << "\t";
+      }
+      std::cout << std::endl;
+    }
+  }
+  else if (matrix == 'C')
+  {
+    std::cout << std::endl;
+    std::cout << "Result: Matrix C " << std::endl;
+    for (int i = 0; i < N; ++i)
+    {
+      for (int j = 0; j < N; ++j)
+      {
+          std::cout << std::hex <<matrixC[i][j] << "\t";
+      }
+      std::cout << std::endl;
+    }
+  }
+}
+
 void initializeInputMatrices()
 {
   for (int i = 0; i < N; i++)
