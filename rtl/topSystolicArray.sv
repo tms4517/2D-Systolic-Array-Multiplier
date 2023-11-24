@@ -72,8 +72,8 @@ module topSystolicArray
 
   // The rows are inputs to the i_a port of PEs in the first column.
   // The columns are inputs to the i_b port of PEs in the first row.
-  logic [N-1:0][6:0][7:0] row_d, row_q;
-  logic [N-1:0][6:0][7:0] col_d, col_q;
+  logic [N-1:0][(2*N)-2:0][7:0] row_d, row_q;
+  logic [N-1:0][(2*N)-2:0][7:0] col_d, col_q;
 
   // When i_validInput is asserted set up the row and col matrices. Else, right
   // shift by 1 element (8 bits) to pass the next inputs to the systolic array.

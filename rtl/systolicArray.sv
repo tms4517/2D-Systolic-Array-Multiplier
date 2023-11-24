@@ -23,8 +23,8 @@ module systolicArray
 
   , input  var logic                 i_doProcess
 
-  , input  var logic [N-1:0][6:0][7:0] i_row
-  , input  var logic [N-1:0][6:0][7:0] i_col
+  , input  var logic [N-1:0][(2*N)-2:0][7:0] i_row
+  , input  var logic [N-1:0][(2*N)-2:0][7:0] i_col
 
   , output var logic [N-1:0][N-1:0][31:0] o_c
   );
