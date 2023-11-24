@@ -15,6 +15,19 @@ module topSystolicArray
   , output var logic                      o_validResult
   );
 
+  // {{{ Check matrix dimension size is valid
+  // Note: Verilator crashes for matrix dimensions > 256.
+  localparam bit N_VALID =
+    &{ N > 2
+    ,  N < 256
+    };
+
+  if (!N_VALID) begin: la_ParamCheck
+    $error("Matrix dimension size 'N' is invalid.");
+  end: la_ParamCheck
+
+  // }}} Check matrix dimension size is valid
+
   // {{{ Control counter
   // This counter is used to determine when to assert o_validResult and sets up
   // the necessary control signals.
