@@ -32,7 +32,13 @@ module topSystolicArray
   // This counter is used to determine when to assert o_validResult and sets up
   // the necessary control signals.
 
-  logic [3:0] counter_d, counter_q;
+  // TODO: Confirm
+  // Number of clock cycles required to complete matrix multiplication.
+  localparam int unsigned MULT_CYCLES = 3*N-2;
+  // `+1` to support counter_q + 1;
+  localparam int unsigned MULT_CYCLES_W = $clog2(MULT_CYCLES+1);
+
+  logic [MULT_CYCLES_W-1:0] counter_d, counter_q;
 
   always_ff @(posedge i_clk, posedge i_arst)
     if (i_arst)
@@ -51,7 +57,7 @@ module topSystolicArray
   always_ff @(posedge i_clk, posedge i_arst)
     if (i_arst)
       validResult_q <= '0;
-    else if (counter_q == 4'd10)
+    else if (counter_q == MULT_CYCLES_W'(MULT_CYCLES))
       validResult_q <= '1;
     else
       validResult_q <= '0;
@@ -74,7 +80,7 @@ module topSystolicArray
   always_comb
     if (i_validInput)
       doProcess_d = '1;
-    else if (counter_q == 4'd11)
+    else if (counter_q == MULT_CYCLES_W'(MULT_CYCLES+1))
       doProcess_d = '0;
     else
       doProcess_d = doProcess_q;
