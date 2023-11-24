@@ -78,7 +78,7 @@ void displayMatrix(char matrix) {
 
 void initializeInputMatrices() {
   for (int i = 0; i < N; i++) {
-    for (int j = 0; j < N; ++j) {
+    for (int j = 0; j < N; j++) {
       matrixA[i][j] = rand() % maxValue;
       matrixB[i][j] = rand() % maxValue;
     }
@@ -86,15 +86,11 @@ void initializeInputMatrices() {
 }
 
 void driveInputMatrices(VtopSystolicArray *dut) {
-  dut->i_a[0] = 0;
-  dut->i_a[1] = 0;
-  dut->i_a[2] = 0;
-  dut->i_a[3] = 0;
 
-  dut->i_b[0] = 0;
-  dut->i_b[1] = 0;
-  dut->i_b[2] = 0;
-  dut->i_b[3] = 0;
+  for (int i = 0; i < N; i++) {
+    dut->i_a[i] = 0;
+    dut->i_b[i] = 0;
+  }
 
   if ((posedge_cnt % 15 == 0) && (sim_time >= RESET_NEG_EDGE)) {
     initializeInputMatrices();
@@ -102,15 +98,10 @@ void driveInputMatrices(VtopSystolicArray *dut) {
     displayMatrix('B');
 
     for (int i = 0; i < N; i++) {
-      dut->i_a[i] |= matrixA[i][0] & 0x000000FF;
-      dut->i_a[i] |= (matrixA[i][1] << 8) & 0x0000FF00;
-      dut->i_a[i] |= (matrixA[i][2] << 16) & 0x00FF0000;
-      dut->i_a[i] |= (matrixA[i][3] << 24) & 0xFF000000;
-
-      dut->i_b[i] |= matrixB[i][0] & 0x000000FF;
-      dut->i_b[i] |= (matrixB[i][1] << 8) & 0x0000FF00;
-      dut->i_b[i] |= (matrixB[i][2] << 16) & 0x00FF0000;
-      dut->i_b[i] |= (matrixB[i][3] << 24) & 0xFF000000;
+      for (int j = 0; j < N; j++) {
+        dut->i_a[i] |= (matrixA[i][j] << (8 * j));
+        dut->i_b[i] |= (matrixB[i][j] << (8 * j));
+      }
     }
   }
 }
