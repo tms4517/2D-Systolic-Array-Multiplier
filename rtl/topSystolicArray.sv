@@ -89,10 +89,15 @@ module topSystolicArray
 
   // {{{ Set-up row and column matrices
 
+  localparam int unsigned PAD = 8*(N-1);
+
   // The rows are inputs to the i_a port of PEs in the first column.
   // The columns are inputs to the i_b port of PEs in the first row.
   logic [N-1:0][(2*N)-2:0][7:0] row_d, row_q;
   logic [N-1:0][(2*N)-2:0][7:0] col_d, col_q;
+
+  logic [N-1:0][N-1:0][7:0] invertedRowElements;
+  logic [N-1:0][N-1:0][7:0] invertedColElements;
 
   // When i_validInput is asserted set up the row and col matrices. Else, right
   // shift by 1 element (8 bits) to pass the next inputs to the systolic array.
@@ -111,11 +116,19 @@ module topSystolicArray
 
     always_comb
       if (i_validInput)
-        row_d[i] = {24'b0, i_a[i][0], i_a[i][1], i_a[i][2], i_a[i][3]} << i*8;
+        row_d[i] = {PAD'(0), invertedRowElements[i]} << i*8;
       else if (counter_q != '0)
         row_d[i] = row_q[i] >> 8;
       else
         row_d[i] = row_q[i];
+
+    // Invert the positions of the elements in each row to form the row matrix.
+    for (genvar j = 0; j < N; j++) begin: la_perRowElement
+
+      always_comb
+        invertedRowElements[i][j] = i_a[i][N-j-1];
+
+    end: la_perRowElement
 
     always_ff @(posedge i_clk, posedge i_arst)
       if (i_arst)
@@ -125,11 +138,19 @@ module topSystolicArray
 
     always_comb
       if (i_validInput)
-        col_d[i] = {24'b0, i_b[0][i], i_b[1][i], i_b[2][i], i_b[3][i]} << i*8;
+        col_d[i] = {PAD'(0), invertedColElements[i]} << i*8;
       else if (counter_q != '0)
         col_d[i] = col_q[i] >> 8;
       else
         col_d[i] = col_q[i];
+
+    // Invert the positions of the elements in each col to form the col matrix.
+    for (genvar j = 0; j < N; j++) begin: la_perColElement
+
+      always_comb
+        invertedColElements[i][j] = i_b[N-j-1][i];
+
+    end: la_perColElement
 
   end: la_perRowCol
 
