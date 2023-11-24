@@ -15,8 +15,10 @@
 #define N 4 // Square matrix dimension
 #define WIDTH 8
 
-// Calculate max value of an element.
+// Max value of an element.
 const int maxValue = std::pow(2, WIDTH);
+// Number of clk cycles before validInput should be asserted.
+const int assertValidInput = (3 * N) + 3;
 
 vluint64_t sim_time = 0;
 vluint64_t posedge_cnt = 0;
@@ -40,7 +42,7 @@ void dut_reset(VtopSystolicArray *dut) {
 void toggle_i_validInput(VtopSystolicArray *dut) {
   dut->i_validInput = 0;
 
-  if ((posedge_cnt % 15 == 0) && (sim_time >= RESET_NEG_EDGE)) {
+  if ((posedge_cnt % assertValidInput == 0) && (sim_time >= RESET_NEG_EDGE)) {
     dut->i_validInput = 1;
   }
 }
@@ -92,7 +94,7 @@ void driveInputMatrices(VtopSystolicArray *dut) {
     dut->i_b[i] = 0;
   }
 
-  if ((posedge_cnt % 15 == 0) && (sim_time >= RESET_NEG_EDGE)) {
+  if ((posedge_cnt % assertValidInput == 0) && (sim_time >= RESET_NEG_EDGE)) {
     initializeInputMatrices();
     displayMatrix('A');
     displayMatrix('B');
