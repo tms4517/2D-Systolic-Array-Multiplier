@@ -1,15 +1,16 @@
 `default_nettype none
 
 module topSystolicArray
+  #(parameter int unsigned N = 4)
   ( input  var logic                 i_clk
   , input  var logic                 i_arst
 
-  , input  var logic [3:0][3:0][7:0] i_a
-  , input  var logic [3:0][3:0][7:0] i_b
+  , input  var logic [N-1:0][N-1:0][7:0] i_a
+  , input  var logic [N-1:0][N-1:0][7:0] i_b
 
   , input  var logic                 i_validInput
 
-  , output var logic [3:0][3:0][31:0] o_c
+  , output var logic [N-1:0][N-1:0][31:0] o_c
 
   , output var logic                 o_validResult
   );
@@ -71,8 +72,8 @@ module topSystolicArray
 
   // The rows are inputs to the i_a port of PEs in the first column.
   // The columns are inputs to the i_b port of PEs in the first row.
-  logic [3:0][6:0][7:0] row_d, row_q;
-  logic [3:0][6:0][7:0] col_d, col_q;
+  logic [N-1:0][6:0][7:0] row_d, row_q;
+  logic [N-1:0][6:0][7:0] col_d, col_q;
 
   // When i_validInput is asserted set up the row and col matrices. Else, right
   // shift by 1 element (8 bits) to pass the next inputs to the systolic array.
@@ -81,7 +82,7 @@ module topSystolicArray
   // condition should take priority since the synthesis tool infers if, else as
   // priority encoding.
 
-  for (genvar i = 0; i < 4; i++) begin: la_perRowCol
+  for (genvar i = 0; i < N; i++) begin: la_perRowCol
 
     always_ff @(posedge i_clk, posedge i_arst)
       if (i_arst)
@@ -115,7 +116,9 @@ module topSystolicArray
 
   // }}} Set-up rows and columns matrices
 
-  systolicArray u_systolicArray
+  systolicArray
+  #(.N (N))
+  u_systolicArray
   ( .i_clk
   , .i_arst
 
