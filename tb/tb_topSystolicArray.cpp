@@ -23,8 +23,8 @@ const int assertValidInput = (3 * N) + 3;
 vluint64_t sim_time = 0;
 vluint64_t posedge_cnt = 0;
 
-uint32_t matrixA[N][N];
-uint32_t matrixB[N][N];
+uint8_t matrixA[N][N];
+uint8_t matrixB[N][N];
 uint32_t matrixC[N][N];
 
 // Assert arst only on the first clock edge.
@@ -53,7 +53,7 @@ void displayMatrix(char matrix) {
     std::cout << "Matrix A " << std::endl;
     for (int i = 0; i < N; ++i) {
       for (int j = 0; j < N; ++j) {
-        std::cout << std::hex << matrixA[i][j] << "\t";
+        std::cout << std::hex << static_cast<int>(matrixA[i][j]) << "\t";
       }
       std::cout << std::endl;
     }
@@ -62,7 +62,7 @@ void displayMatrix(char matrix) {
     std::cout << "Matrix B " << std::endl;
     for (int i = 0; i < N; ++i) {
       for (int j = 0; j < N; ++j) {
-        std::cout << std::hex << matrixB[i][j] << "\t";
+        std::cout << std::hex << static_cast<int>(matrixB[i][j]) << "\t";
       }
       std::cout << std::endl;
     }
@@ -71,7 +71,7 @@ void displayMatrix(char matrix) {
     std::cout << "Result: Matrix C " << std::endl;
     for (int i = 0; i < N; ++i) {
       for (int j = 0; j < N; ++j) {
-        std::cout << std::hex << matrixC[i][j] << "\t";
+        std::cout << std::hex << static_cast<int>(matrixC[i][j]) << "\t";
       }
       std::cout << std::endl;
     }
