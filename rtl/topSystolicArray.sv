@@ -90,6 +90,7 @@ module topSystolicArray
   // {{{ Set-up row and column matrices
 
   localparam int unsigned PAD = 8*(N-1);
+  localparam int unsigned APPEND_ZERO = PAD'(0);
 
   // The rows are inputs to the i_a port of PEs in the first column.
   // The columns are inputs to the i_b port of PEs in the first row.
@@ -116,7 +117,7 @@ module topSystolicArray
 
     always_comb
       if (i_validInput)
-        row_d[i] = {PAD'(0), invertedRowElements[i]} << i*8;
+        row_d[i] = {APPEND_ZERO, invertedRowElements[i]} << i*8;
       else if (counter_q != '0)
         row_d[i] = row_q[i] >> 8;
       else
@@ -138,7 +139,7 @@ module topSystolicArray
 
     always_comb
       if (i_validInput)
-        col_d[i] = {PAD'(0), invertedColElements[i]} << i*8;
+        col_d[i] = {APPEND_ZERO, invertedColElements[i]} << i*8;
       else if (counter_q != '0)
         col_d[i] = col_q[i] >> 8;
       else
