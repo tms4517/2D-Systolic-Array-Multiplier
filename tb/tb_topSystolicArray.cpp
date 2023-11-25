@@ -3,6 +3,7 @@
 #include <iomanip>
 #include <iostream>
 #include <stdlib.h>
+#include <vector>
 
 #include "VtopSystolicArray.h" // Verilated DUT.
 #include <verilated.h>         // Common verilator routines.
@@ -99,10 +100,32 @@ void driveInputMatrices(VtopSystolicArray *dut) {
     displayMatrix('A');
     displayMatrix('B');
 
+    // Convert matrices to single arrays.
+    std::vector<uint8_t> singleArrayA;
+    std::vector<uint8_t> singleArrayB;
+
     for (int i = 0; i < N; i++) {
       for (int j = 0; j < N; j++) {
-        dut->i_a[i] |= (matrixA[i][j] << (8 * j));
-        dut->i_b[i] |= (matrixB[i][j] << (8 * j));
+        singleArrayA.push_back(matrixA[i][j]);
+        singleArrayB.push_back(matrixB[i][j]);
+      }
+    }
+
+    // Drive the input ports.
+    // Note: Verilator input ports are represented as 32 bit arrays. numArrays
+    // represents the number of these arrays required to represent the input
+    // matrix. Eg - 7 32 bit arrays are required to represent a 5x5 matrix.
+
+    int numArrays = (std::pow(N, 2) + 4 - 1) / 4;
+
+    int index = 0;
+
+    for (int i = 0; i < numArrays; i++) {
+      for (int j = 0; j < 4; j++) {
+        dut->i_a[i] |= (static_cast<uint32_t>(singleArrayA[index] << (8 * j)));
+        dut->i_b[i] |= (static_cast<uint32_t>(singleArrayB[index] << (8 * j)));
+
+        index++;
       }
     }
   }
