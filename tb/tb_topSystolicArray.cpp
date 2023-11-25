@@ -90,7 +90,9 @@ void initializeInputMatrices() {
 
 void driveInputMatrices(VtopSystolicArray *dut) {
 
-  for (int i = 0; i < N; i++) {
+  int numArrays = (std::pow(N, 2) + 4 - 1) / 4;
+
+  for (int i = 0; i < numArrays; i++) {
     dut->i_a[i] = 0;
     dut->i_b[i] = 0;
   }
@@ -115,8 +117,6 @@ void driveInputMatrices(VtopSystolicArray *dut) {
     // Note: Verilator input ports are represented as 32 bit arrays. numArrays
     // represents the number of these arrays required to represent the input
     // matrix. Eg - 7 32 bit arrays are required to represent a 5x5 matrix.
-
-    int numArrays = (std::pow(N, 2) + 4 - 1) / 4;
 
     int index = 0;
 
