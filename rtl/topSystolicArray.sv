@@ -90,7 +90,7 @@ module topSystolicArray
   // {{{ Set-up row and column matrices
 
   localparam int unsigned PAD = 8*(N-1);
-  localparam int unsigned APPEND_ZERO = PAD'(0);
+  localparam bit [PAD-1:0] APPEND_ZERO = PAD'(0);
 
   // The rows are inputs to the i_a port of PEs in the first column.
   // The columns are inputs to the i_b port of PEs in the first row.
