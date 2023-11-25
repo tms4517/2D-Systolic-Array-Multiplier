@@ -29,6 +29,7 @@ module systolicArray
   , output var logic [N-1:0][N-1:0][31:0]    o_c
   );
 
+  /* verilator lint_off UNUSED */
   // Variable used to pass data horizontally between PEs in the same row. The
   // output o_a of one PE is connected to the input i_a of the PE to its right.
   logic [N-1:0][N:0][7:0] rowInterConnect;
@@ -36,6 +37,7 @@ module systolicArray
   // Variable used to pass data vertically between PEs in the same column. The
   // output o_b of one PE is connected to the input i_b of the PE below it.
   logic [N:0][N-1:0][7:0] colInterConnect;
+  /* verilator lint_off UNUSED */
 
   for (genvar i = 0; i < N; i++) begin: la_PerDummyRowColInterconnect
 
