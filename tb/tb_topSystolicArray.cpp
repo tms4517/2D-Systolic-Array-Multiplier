@@ -125,7 +125,7 @@ void verifyOutputMatrix(VtopSystolicArray *dut) {
     calculateResultMatrix();
     displayMatrix('C');
 
-    // Note: Verilator represents the output matrix as 16 32 bit arrays.
+    // Note: Verilator represents the output matrix as n^2 bit arrays.
     bool incorrect = false;
 
     for (int i = 0; i < N; ++i) {
