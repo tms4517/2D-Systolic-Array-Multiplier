@@ -52,8 +52,8 @@ void displayMatrix(char matrix) {
   if (matrix == 'A') {
     std::cout << std::endl;
     std::cout << "Matrix A " << std::endl;
-    for (int i = 0; i < N; ++i) {
-      for (int j = 0; j < N; ++j) {
+    for (int i = 0; i < N; i++) {
+      for (int j = 0; j < N; j++) {
         std::cout << std::hex << static_cast<int>(matrixA[i][j]) << "\t";
       }
       std::cout << std::endl;
@@ -61,8 +61,8 @@ void displayMatrix(char matrix) {
   } else if (matrix == 'B') {
     std::cout << std::endl;
     std::cout << "Matrix B " << std::endl;
-    for (int i = 0; i < N; ++i) {
-      for (int j = 0; j < N; ++j) {
+    for (int i = 0; i < N; i++) {
+      for (int j = 0; j < N; j++) {
         std::cout << std::hex << static_cast<int>(matrixB[i][j]) << "\t";
       }
       std::cout << std::endl;
@@ -70,8 +70,8 @@ void displayMatrix(char matrix) {
   } else if (matrix == 'C') {
     std::cout << std::endl;
     std::cout << "Result: Matrix C " << std::endl;
-    for (int i = 0; i < N; ++i) {
-      for (int j = 0; j < N; ++j) {
+    for (int i = 0; i < N; i++) {
+      for (int j = 0; j < N; j++) {
         std::cout << std::hex << static_cast<int>(matrixC[i][j]) << "\t";
       }
       std::cout << std::endl;
@@ -132,8 +132,8 @@ void driveInputMatrices(VtopSystolicArray *dut) {
 }
 
 void calculateResultMatrix() {
-  for (int i = 0; i < N; ++i) {
-    for (int j = 0; j < N; ++j) {
+  for (int i = 0; i < N; i++) {
+    for (int j = 0; j < N; j++) {
       matrixC[i][j] = 0;
 
       for (int k = 0; k < N; ++k) {
@@ -151,8 +151,8 @@ void verifyOutputMatrix(VtopSystolicArray *dut) {
     // Note: Verilator represents the output matrix as n^2 bit arrays.
     bool incorrect = false;
 
-    for (int i = 0; i < N; ++i) {
-      for (int j = 0; j < N; ++j) {
+    for (int i = 0; i < N; i++) {
+      for (int j = 0; j < N; j++) {
         if (dut->o_c[(N * i) + j] != matrixC[i][j]) {
           incorrect = true;
         }
