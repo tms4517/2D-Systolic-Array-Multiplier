@@ -13,7 +13,7 @@
 #define RESET_NEG_EDGE 5  // Clk edge number to deassert arst.
 #define VERIF_START_TIME 7
 
-#define N 4 // Square matrix dimension
+#define N 4 // Square matrix dimension.                       /* Modify this */
 #define WIDTH 8
 
 // Max value of an element.
