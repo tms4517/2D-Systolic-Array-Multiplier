@@ -19,7 +19,7 @@ module topSystolicArray
   // Note: Verilator crashes for matrix dimensions > 256.
   localparam bit N_VALID =
     &{ N > 2
-    ,  N < 256
+    ,  N < 257
     };
 
   if (!N_VALID) begin: la_ParamCheck
