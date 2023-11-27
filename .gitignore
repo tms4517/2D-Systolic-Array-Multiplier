@@ -6,3 +6,9 @@
 
 # Ignore waveform file.
 tb/waveform.vcd
+
+# Ignore waveform signal list.
+tb/*.gtkw
+
+# Ignore verilator generated files.
+tb/*.verilate
