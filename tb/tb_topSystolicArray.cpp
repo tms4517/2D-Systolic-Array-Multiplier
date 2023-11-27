@@ -9,8 +9,8 @@
 #include <verilated.h>         // Common verilator routines.
 #include <verilated_vcd_c.h>   // Write waverforms to a VCD file.
 
-#define MAX_SIM_TIME 500 // Number of clk edges.
-#define RESET_NEG_EDGE 5 // Clk edge number to deassert arst.
+#define MAX_SIM_TIME 1000 // Number of clk edges.
+#define RESET_NEG_EDGE 5  // Clk edge number to deassert arst.
 #define VERIF_START_TIME 7
 
 #define N 4 // Square matrix dimension
