@@ -4,6 +4,9 @@ TOP_MODULE=topSystolicArray
 # Modify this variable with the path to the RTL directory.
 RTL_PATH=/home/tej/2D-Systolic-Array-Multiplier/rtl
 
+.PHONY: all
+all: clean verilate build sim waves
+
 .PHONY: verilate
 verilate: .stamp.verilate
 
