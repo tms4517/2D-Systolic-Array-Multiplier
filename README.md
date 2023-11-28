@@ -46,4 +46,4 @@ cd tb && make all
 (SIMD processor)
 (unpacked data types to perform synthesis)
 
-**STATUS**: RTL & TB complete. DOcumentation in progress.
+**STATUS**: RTL & TB complete. Documentation in progress.
