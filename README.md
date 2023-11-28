@@ -27,11 +27,11 @@ cd tb && make all
 
 ### Systolic architectures
 
-(describe and explain paper)
+(describe and explain seminal paper: "Why Systolic Architectures?": https://www.cse.wustl.edu/~roger/560M.f17/01653825.pdf)
 
 ### Existing implementations
 
-(describe Google's TPU)
+(describe Google's TPU. Blog: https://cloud.google.com/blog/products/ai-machine-learning/an-in-depth-look-at-googles-first-tensor-processing-unit-tpu. Paper: https://arxiv.org/pdf/1704.04760.pdf)
 
 ## Design
 
