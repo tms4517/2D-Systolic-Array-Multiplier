@@ -22,3 +22,8 @@ To modify the default matrix size: `cd rtl`, open `topSystolicArray.sv` and modi
 ```
 cd tb && make all
 ```
+
+
+
+
+STATUS: RTL & TB complete. DOcumentation in progress.
