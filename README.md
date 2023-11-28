@@ -16,7 +16,7 @@ git clone https://github.com/tms4517/2D-Systolic-Array-Multiplier.git
 ```
 2. By default the RTL and TB are configured to a matrix size of 4x4.
 
-To modify the default matrix size: `cd rtl`, open `topSystolicArray.sv` and modify the paramater `N`. And, `cd tb`, open `tb_topSystolicArray.sv` and modify the macro `N`. Note,  `N` > 2 and verilator crashes for large matrix dimensions.
+To modify the default matrix size: `cd rtl`, open `topSystolicArray.sv` and modify the paramater `N`. And, `cd tb`, open `tb_topSystolicArray.sv` and modify the macro `N`. Note,  `N` > 2 and verilator crashes for large matrix dimensions (>100 on my PC).
 
 3. Run the simulation:
 ```
