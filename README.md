@@ -23,7 +23,27 @@ To modify the default matrix size: `cd rtl`, open `topSystolicArray.sv` and modi
 cd tb && make all
 ```
 
+## Introduction
 
+### Systolic architectures
 
+(describe and explain paper)
 
-STATUS: RTL & TB complete. DOcumentation in progress.
+### Existing implementations
+
+(describe Google's TPU)
+
+## Design
+
+(Summary of design)
+
+## Verification
+
+(Summary of verification)
+
+## Further Work
+
+(SIMD processor)
+(unpacked data types to perform synthesis)
+
+**STATUS**: RTL & TB complete. DOcumentation in progress.
