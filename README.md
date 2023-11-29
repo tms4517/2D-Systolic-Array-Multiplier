@@ -35,7 +35,37 @@ cd tb && make all
 
 ## Design
 
-(Summary of design)
+Interfacing to the top level module - `topSystolicArray.sv` has been kept simple.
+Besides `i_clk` and `i_arst`, there are two input ports to drive the matrices A
+and B - `i_a` and `i_b`. These ports are sampled, when the input port
+`i_validInput` is asserted. The input matrices are then transformed and passed
+to the systolic array for multiplication. When the matrix multiplication has
+completed, output port `i_validInput` is asserted and the result matrix - `o_c`
+can be sampled.
+
+The waveform below shows the interface being exercised.
+![Interface](images/interface.png)
+
+The elements of the input matrices are 8 bit integers. This was chosen out of
+simplicity and provides an appropriate level of accuracy for neural network
+calculations, as described in Google's TPU blog post. Moreover, the elements of
+the output matrix are set to 32 bits. This was chosen out of convenience for
+verifying any NxN input matrix. Note: The element widths can be modified
+with care as described in `README.md` files in the design and verification
+sub-repositories.
+
+The overall steps involved in performing the matrix multiplication using the
+systolic array follows the steps outlined in this YouTube video:
+https://www.youtube.com/watch?v=cmy7LBaWuZ8 and are described below.
+To align to it and make it easier to follow the steps, a 4x4 matrix will be used
+as example.
+
+### Set-up the row and column matrices
+
+
+
+### Pass the elements from the row and column matrices to the systolic array
+
 
 ## Verification
 
