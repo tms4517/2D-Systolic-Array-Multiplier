@@ -33,7 +33,7 @@ cd tb && make all
 
 (describe Google's TPU. Blog: https://cloud.google.com/blog/products/ai-machine-learning/an-in-depth-look-at-googles-first-tensor-processing-unit-tpu. Paper: https://arxiv.org/pdf/1704.04760.pdf)
 
-## Design
+## Design Outline
 
 Interfacing to the top level module - `topSystolicArray.sv` has been kept simple.
 Besides `i_clk` and `i_arst`, there are two input ports to drive the matrices A
@@ -61,14 +61,40 @@ as example.
 
 ### Set-up the row and column matrices
 
+When `i_validInput` is asserted the input matrices are transformed and
+registered into 'row' and 'column' matrices as shown below. For each row of
+matrix `i_a`, the position of the elements are reversed, zeros are appended to
+the MSB of the rows and each row is right shifted accordingly to form the 'row'
+matrix. Each column of matrix `i_b` is transformed into a row, zeros are
+appended to the MSB of the rows and each row is right shifted accordingly to
+form the 'column' matrix.
 
+![Input to row/column matrix transformation](images/matrixTransformation.svg)
 
 ### Pass the elements from the row and column matrices to the systolic array
 
+The elements in the first column of the row matrix are connected to the
+horizontal inputs of the systolic array. And, the elements in the first column
+of the column matrix are connected to the vertical inputs of the systolic array.
+This is shown below.
 
-## Verification
+![Row/Column matrices connected to PEs](images/connectToPEs.svg)
 
-(Summary of verification)
+At every clock cycle of the multiplication process, the row and column matrices
+are left shifted by 1 element to load new values into the systolic array. The
+waveform below shows the signals on the horizontal and vertical ports of the
+systolic array being loaded with new values at every clock cycle. After, 10
+(3N-2) clock cycles the multiplication is complete.
+
+![PE input sequence](images/inputSequence.png)
+
+The `README.md` file in the `rtl` sub-directory contains implementation specific
+details.
+
+## Verification Outline
+
+The `README.md` file in the `tb` sub-directory contains implementation specific
+details.
 
 ## Further Work
 
