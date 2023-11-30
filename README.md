@@ -102,7 +102,7 @@ details.
 A basic C++ test bench consisting of several functions to implement a specific
 task was created. The test outline is show below:
 
-Assert the asynchronous signal
+0. Assert the asynchronous reset.
 
 Loop {
 
