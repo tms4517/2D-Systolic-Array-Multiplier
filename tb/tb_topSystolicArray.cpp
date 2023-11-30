@@ -69,7 +69,7 @@ void displayMatrix(char matrix, VtopSystolicArray *dut) {
     }
   } else if (matrix == 'C') {
     std::cout << std::endl;
-    std::cout << "Expected Matrix:" << std::endl;
+    std::cout << "Expected result Matrix:" << std::endl;
     for (int i = 0; i < N; i++) {
       for (int j = 0; j < N; j++) {
         std::cout << std::hex << static_cast<int>(matrixC[i][j]) << "\t";
