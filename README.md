@@ -128,7 +128,22 @@ details.
 
 ## Further Work
 
-(SIMD processor)
-(unpacked data types to perform synthesis)
+**Synthesize and target an FPGA**
+The RTL makes use of packed data types for ease of coding and to make it easier
+for others to understand the code. However, packed data types are not supported
+by a widely used open source tool - Yosys. Yosys is used for converting SV code
+into a  gate-level representation that can be used for further stages of the
+digital design flow, such as optimization, placement, and routing. Open source
+RTL-> GDSII flows (ASIC) such as the Open Lane project and RTL->Bitsream flows
+(FPGA) make use of this tool.
 
-**STATUS**: RTL & TB complete. Documentation in progress.
+In the future, I plan on forking the project and unpacking all the data types.
+
+**Interface module to a custom SIMD processor**
+It would be interesting to create a SIMD processor with custom instructions that
+can fetch the input matrices from memory, and drive the input ports of the top
+level module. The processor would then wait for a few clock cycles for the
+result to be calculated. It would then read the output ports of the top level
+module and write the result back to memory.
+
+*STATUS*: RTL & TB complete. Documentation in progress.
