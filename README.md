@@ -110,8 +110,12 @@ Loop {
 
   When `o_validResult` is asserted
   Calculate the expected result matrix
-  Verify that `o_c` is equal to the result matrix
+  Verify that `o_c` is equal to the result matrix, if it isn't raise an error
 }
+
+THe simulation prints out the input matrices and the expected result matrix. If
+an error occurs, the output matrix received will also be printed and the
+simulation will end.
 
 The `README.md` file in the `tb` sub-directory contains implementation specific
 details.
