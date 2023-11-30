@@ -1,4 +1,4 @@
-# make verilate -> make build -> make sim -> make waves
+# `make all` OR `make verilate` -> `make build` -> `make sim` -> `make waves`
 
 TOP_MODULE=topSystolicArray
 RTL_PATH=../rtl
