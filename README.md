@@ -55,10 +55,9 @@ The waveform below shows the interface being exercised.
 
 The elements of the input matrices are 8 bit integers. This was chosen out of
 simplicity and provides an appropriate level of accuracy for neural network
-calculations, as described in Google's TPU blog post. Moreover, the elements of
-the output matrix are set to 32 bits. This was chosen out of convenience for
-verifying any NxN input matrix. Note: The element widths can be modified
-with care.
+calculations, as described in Google's TPU blog post. Furthermore, the elements
+of the output matrix are set to 32 bits. This was chosen out of convenience for
+verifying any NxN input matrix in the range 2 < N < 17.
 
 The overall steps involved in performing the matrix multiplication using the
 systolic array follows the steps outlined in this YouTube video:
