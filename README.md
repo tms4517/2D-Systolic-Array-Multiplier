@@ -129,6 +129,7 @@ details.
 ## Further Work
 
 **Synthesize and target an FPGA**
+
 The RTL makes use of packed data types for ease of coding and to make it easier
 for others to understand the code. However, packed data types are not supported
 by a widely used open source tool - Yosys. Yosys is used for converting SV code
@@ -140,6 +141,7 @@ RTL-> GDSII flows (ASIC) such as the Open Lane project and RTL->Bitsream flows
 In the future, I plan on forking the project and unpacking all the data types.
 
 **Interface module to a custom SIMD processor**
+
 It would be interesting to create a SIMD processor with custom instructions that
 can fetch the input matrices from memory, and drive the input ports of the top
 level module. The processor would then wait for a few clock cycles for the
