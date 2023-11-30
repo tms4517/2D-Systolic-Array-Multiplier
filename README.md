@@ -99,6 +99,20 @@ details.
 
 ## Verification Outline
 
+A basic C++ test bench consisting of several functions to implement a specific
+task was created. The test outline is show below:
+
+Assert the asynchronous signal
+Loop {
+  Assert `i_validInput`
+  Create random NxN matrices
+  Drive the input ports `i_a` and `i_b` with these matrices
+
+  When `o_validResult` is asserted
+  Calculate the expected result matrix
+  Verify that `o_c` is equal to the result matrix
+}
+
 The `README.md` file in the `tb` sub-directory contains implementation specific
 details.
 
