@@ -32,7 +32,6 @@ module topSystolicArray
   // This counter is used to determine when to assert o_validResult and sets up
   // the necessary control signals.
 
-  // TODO: Confirm
   // Number of clock cycles required to complete matrix multiplication.
   localparam int unsigned MULT_CYCLES = 3*N-2;
   // `+1` to support counter_q + 1;
@@ -52,6 +51,8 @@ module topSystolicArray
     else
       counter_d = '0;
 
+  //o_validResult is asserted to signal the end of the matrix multiplication
+  // process.
   logic validResult_q;
 
   always_ff @(posedge i_clk, posedge i_arst)
