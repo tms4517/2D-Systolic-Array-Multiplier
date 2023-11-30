@@ -106,13 +106,13 @@ Assert the asynchronous signal
 
 Loop {
 
-  Assert `i_validInput`
-  Create random NxN matrices
-  Drive the input ports `i_a` and `i_b` with these matrices
-
-  When `o_validResult` is asserted
-  Calculate the expected result matrix
-  Verify that `o_c` is equal to the result matrix, if it isn't raise an error
+  1. Assert `i_validInput`
+  2. Create random NxN matrices
+  3. Drive the input ports `i_a` and `i_b` with these matrices
+  4. When `o_validResult` is asserted
+  5. Calculate the expected result matrix
+  6. Verify that `o_c` is equal to the result matrix, if it isn't raise an error
+  7. Wait for a few clock cycles
 
 }
 
