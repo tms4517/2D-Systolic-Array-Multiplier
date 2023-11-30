@@ -47,7 +47,7 @@ Besides `i_clk` and `i_arst`, there are two input ports to drive the matrices A
 and B - `i_a` and `i_b`. These ports are sampled, when the input port
 `i_validInput` is asserted. The input matrices are then transformed and passed
 to the systolic array for multiplication. When the matrix multiplication has
-completed, output port `i_validInput` is asserted and the result matrix - `o_c`
+completed, output port `o_validResult` is asserted and the result matrix - `o_c`
 can be sampled.
 
 The waveform below shows the interface being exercised.
