@@ -16,8 +16,11 @@ module topSystolicArray
   );
 
   // {{{ Check matrix dimension size is valid
-  // Note: Verilator crashes for matrix dimensions > 256.
-  localparam bit N_VALID = N > 2;
+
+    localparam bit N_VALID =
+      &{ N > 2
+      ,  N < 257
+      };
 
   if (!N_VALID) begin: ParamCheck
     $error("Matrix dimension size 'N' is invalid.");
