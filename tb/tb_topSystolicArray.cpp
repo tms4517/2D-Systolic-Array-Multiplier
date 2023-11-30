@@ -48,7 +48,7 @@ void toggle_i_validInput(VtopSystolicArray *dut) {
   }
 }
 
-void displayMatrix(char matrix) {
+void displayMatrix(char matrix, VtopSystolicArray *dut) {
   if (matrix == 'A') {
     std::cout << std::endl;
     std::cout << "Matrix A " << std::endl;
@@ -69,10 +69,20 @@ void displayMatrix(char matrix) {
     }
   } else if (matrix == 'C') {
     std::cout << std::endl;
-    std::cout << "Result: Matrix C " << std::endl;
+    std::cout << "Expected Matrix:" << std::endl;
     for (int i = 0; i < N; i++) {
       for (int j = 0; j < N; j++) {
         std::cout << std::hex << static_cast<int>(matrixC[i][j]) << "\t";
+      }
+      std::cout << std::endl;
+    }
+  } else if (matrix == 'R') {
+    std::cout << std::endl;
+    std::cout << "Received matrix " << std::endl;
+    for (int i = 0; i < N; i++) {
+      for (int j = 0; j < N; j++) {
+        std::cout << std::hex << static_cast<int>(dut->o_c[(N * i) + j])
+                  << "\t";
       }
       std::cout << std::endl;
     }
@@ -99,8 +109,8 @@ void driveInputMatrices(VtopSystolicArray *dut) {
 
   if ((posedge_cnt % assertValidInput == 0) && (sim_time >= RESET_NEG_EDGE)) {
     initializeInputMatrices();
-    displayMatrix('A');
-    displayMatrix('B');
+    displayMatrix('A', dut);
+    displayMatrix('B', dut);
 
     // Convert matrices to single arrays.
     std::vector<uint8_t> singleArrayA;
@@ -146,7 +156,7 @@ void calculateResultMatrix() {
 void verifyOutputMatrix(VtopSystolicArray *dut) {
   if ((dut->o_validResult == 1) && (sim_time >= VERIF_START_TIME)) {
     calculateResultMatrix();
-    displayMatrix('C');
+    displayMatrix('C', dut);
 
     // Note: Verilator represents the output matrix as n^2 bit arrays.
     bool incorrect = false;
@@ -160,14 +170,12 @@ void verifyOutputMatrix(VtopSystolicArray *dut) {
     }
 
     if (incorrect) {
-      std::cout << "ERROR: result matrix is incorrect." << std::endl;
-
-      for (int i = 0; i < N * N; i++) {
-        std::cout << std::hex << dut->o_c[i] << std::endl;
-      }
-
+      std::cout << std::endl;
+      std::cerr << "ERROR: output matrix received is incorrect." << std::endl;
+      displayMatrix('R', dut);
       std::cout << " simtime: " << (int)sim_time << std::endl;
-      std::cout << "*********************************************" << std::endl;
+      std::cout << "*******************************************" << std::endl;
+      exit(EXIT_FAILURE);
     }
   }
 }
