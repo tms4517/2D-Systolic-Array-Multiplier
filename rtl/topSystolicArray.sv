@@ -19,9 +19,9 @@ module topSystolicArray
   // Note: Verilator crashes for matrix dimensions > 256.
   localparam bit N_VALID = N > 2;
 
-  if (!N_VALID) begin: la_ParamCheck
+  if (!N_VALID) begin: ParamCheck
     $error("Matrix dimension size 'N' is invalid.");
-  end: la_ParamCheck
+  end: ParamCheck
 
   // }}} Check matrix dimension size is valid
 
@@ -104,7 +104,7 @@ module topSystolicArray
   // condition should take priority since the synthesis tool infers if, else as
   // priority encoding.
 
-  for (genvar i = 0; i < N; i++) begin: la_perRowCol
+  for (genvar i = 0; i < N; i++) begin: perRowCol
 
     always_ff @(posedge i_clk, posedge i_arst)
       if (i_arst)
@@ -121,12 +121,12 @@ module topSystolicArray
         row_d[i] = row_q[i];
 
     // Invert the positions of the elements in each row to form the row matrix.
-    for (genvar j = 0; j < N; j++) begin: la_perRowElement
+    for (genvar j = 0; j < N; j++) begin: perRowElement
 
       always_comb
         invertedRowElements[i][j] = i_a[i][N-j-1];
 
-    end: la_perRowElement
+    end: perRowElement
 
     always_ff @(posedge i_clk, posedge i_arst)
       if (i_arst)
@@ -143,14 +143,14 @@ module topSystolicArray
         col_d[i] = col_q[i];
 
     // Invert the positions of the elements in each col to form the col matrix.
-    for (genvar j = 0; j < N; j++) begin: la_perColElement
+    for (genvar j = 0; j < N; j++) begin: perColElement
 
       always_comb
         invertedColElements[i][j] = i_b[N-j-1][i];
 
-    end: la_perColElement
+    end: perColElement
 
-  end: la_perRowCol
+  end: perRowCol
 
   // }}} Set-up rows and columns matrices
 

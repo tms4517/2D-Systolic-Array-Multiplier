@@ -39,7 +39,7 @@ module systolicArray
   logic [N:0][N-1:0][7:0] colInterConnect;
   /* verilator lint_off UNUSED */
 
-  for (genvar i = 0; i < N; i++) begin: la_PerDummyRowColInterconnect
+  for (genvar i = 0; i < N; i++) begin: PerDummyRowColInterconnect
 
     // These are dummy interconnects used to pass data from the row matrices to
     // the i_a ports of PE in the first col.
@@ -51,10 +51,10 @@ module systolicArray
     always_comb
       colInterConnect[0][i] = i_col[i][0];
 
-  end: la_PerDummyRowColInterconnect
+  end: PerDummyRowColInterconnect
 
-  for (genvar i = 0; i < N; i++) begin: la_PerRow
-    for (genvar j = 0; j < N; j++) begin: la_PerCol
+  for (genvar i = 0; i < N; i++) begin: PerRow
+    for (genvar j = 0; j < N; j++) begin: PerCol
 
       pe u_pe
       ( .i_clk
@@ -70,8 +70,8 @@ module systolicArray
       , .o_y (o_c[i][j])
       );
 
-    end: la_PerCol
-  end: la_PerRow
+    end: PerCol
+  end: PerRow
 
 endmodule
 
