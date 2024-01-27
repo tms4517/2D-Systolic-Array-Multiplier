@@ -125,7 +125,9 @@ details.
 
 ## Further Work
 
-**Synthesize and target an FPGA**
+### Synthesize and target an FPGA
+
+**Open source flows**
 
 The RTL makes use of packed data types for ease of coding and to make it easier
 for others to understand the code. However, packed data types are not supported
@@ -137,6 +139,21 @@ RTL-> GDSII flows (ASIC) such as the Open Lane project and RTL->Bitsream flows
 
 In the future, I plan on forking the project and unpacking all the data types.
 
+**Intel Quartus Prime**
+
+The RTL was compiled using Quartus Prime to target a Cyclone V FPGA and the
+resource utilization for a 2x2 and 4x4 systolic array is shown below.
+
+![2x2Resource](images/2x2Resource.png)
+
+![4x4Resource](images/4x4Resource.png)
+
+The number of DSP units utilised correspond to the number of PEs instantiated in
+each systolic array respectively.
+
+Note: Quartus only supports SystemVerilog 2005 so the syntax of the for loops
+needs to be amended to compile the design.
+
 **Interface module to a custom SIMD processor**
 
 It would be interesting to create a SIMD processor with custom instructions that
@@ -145,4 +162,4 @@ level module. The processor would then wait for a few clock cycles for the
 result to be calculated. It would then read the output ports of the top level
 module and write the result back to memory.
 
-*STATUS*: RTL & TB complete. Documentation in progress.
+*STATUS: RTL & TB complete. Documentation in progress.*
