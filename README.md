@@ -1,7 +1,7 @@
 # 2D-Systolic-Array-Multiplier
 
 This repository implements a two dimensional systolic array that can be
-configured to multiply 2 square matrices of 2 < dimensions < 17.
+configured to multiply 2 square matrices of dimensions > 2.
 
 The `rtl` sub-directory contains the RTL written in System Verilog and the `tb`
 sub-directory contains the test bench written in C++ and simulated using
@@ -23,7 +23,7 @@ git clone https://github.com/tms4517/2D-Systolic-Array-Multiplier.git
 By default the RTL and TB are configured to a matrix size of 4x4.
 
 To modify the default matrix size, pass `N` on the command line when running
-the simulation (valid range: 2 < N < 17):
+the simulation (valid range: N > 2):
 
 ```
 cd tb && make all N=8
