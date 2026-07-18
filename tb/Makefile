@@ -3,6 +3,9 @@
 TOP_MODULE=topSystolicArray
 RTL_PATH=../rtl
 
+# Square matrix dimension. Override on the command line, e.g. `make all N=8`.
+N ?= 4
+
 .PHONY: all
 all: clean verilate build sim waves
 
@@ -34,7 +37,7 @@ waveform.vcd: ./obj_dir/V$(TOP_MODULE)
 .stamp.verilate: $(RTL_PATH)/$(TOP_MODULE).sv tb_$(TOP_MODULE).cpp
 	@echo
 	@echo "### VERILATING ###"
-	verilator -Wall --trace --x-assign unique --x-initial unique -cc -I../rtl/ $(RTL_PATH)/$(TOP_MODULE).sv --exe tb_$(TOP_MODULE).cpp
+	verilator -Wall --trace --x-assign unique --x-initial unique -cc -I../rtl/ -GN=$(N) -CFLAGS "-DMATRIX_N=$(N)" $(RTL_PATH)/$(TOP_MODULE).sv --exe tb_$(TOP_MODULE).cpp
 	@touch .stamp.verilate
 
 .PHONY: lint

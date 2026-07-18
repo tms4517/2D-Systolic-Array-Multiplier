@@ -13,7 +13,11 @@
 #define RESET_NEG_EDGE 5  // Clk edge number to deassert arst.
 #define VERIF_START_TIME 7
 
-#define N 4 // Square matrix dimension.                       /* Modify this */
+#ifndef MATRIX_N
+#define MATRIX_N 4 // Square matrix dimension. Override via `make all N=<value>`.
+#endif
+
+#define N MATRIX_N
 #define WIDTH 8
 
 // Max value of an element.
@@ -175,6 +179,8 @@ void verifyOutputMatrix(VtopSystolicArray *dut) {
       displayMatrix('R', dut);
       std::cout << " simtime: " << (int)sim_time << std::endl;
       std::cout << "*******************************************" << std::endl;
+      std::cout << "Test FAIL" << std::endl;
+      std::cout << "*******************************************" << std::endl;
       exit(EXIT_FAILURE);
     }
   }
@@ -217,5 +223,9 @@ int main(int argc, char **argv, char **env) {
 
   m_trace->close();
   delete dut;
+  std::cout << std::endl;
+  std::cout << "*******************************************" << std::endl;
+  std::cout << "Test PASS" << std::endl;
+  std::cout << "*******************************************" << std::endl;
   exit(EXIT_SUCCESS);
 }
