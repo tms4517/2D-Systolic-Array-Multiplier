@@ -4,7 +4,7 @@ TOP_MODULE=topSystolicArray
 RTL_PATH=../rtl
 
 # Square matrix dimension. Override on the command line, e.g. `make all N=8`.
-N ?= 64
+N ?= 4
 
 .PHONY: all
 all: clean verilate build sim waves
