@@ -8,9 +8,7 @@
 #include "VtopSystolicArray.h" // Verilated DUT.
 #include <verilated.h>         // Common verilator routines.
 #include <verilated_vcd_c.h>   // Write waverforms to a VCD file.
-
-#define MAX_SIM_TIME 1000 // Number of clk edges.
-#define RESET_NEG_EDGE 5  // Clk edge number to deassert arst.
+#define RESET_NEG_EDGE 5 // Clk edge number to deassert arst.
 #define VERIF_START_TIME 7
 
 #ifndef MATRIX_N
@@ -20,13 +18,27 @@
 #define N MATRIX_N
 #define WIDTH 8
 
+// Number of clk cycles before validInput should be asserted.
+// A new input matrix is driven every 'assertValidInput' posedges and the
+// multiplication itself completes in (3N-2) cycles.
+#define ASSERT_VALID_INPUT ((3 * N) + 3)
+
+// Number of clk edges (half cycles) to simulate for. A new matrix is
+// driven every input window (ASSERT_VALID_INPUT posedges); the last window does
+// not complete before the sim ends, so running M windows yields (M-1) verified
+// results. M = 11 therefore guarantees at least 10 checks for every valid N.
+#define SIM_INPUT_WINDOWS 11
+#define MAX_SIM_TIME (ASSERT_VALID_INPUT * 2 * SIM_INPUT_WINDOWS + 40)
+
 // Max value of an element.
 const int maxValue = std::pow(2, WIDTH);
-// Number of clk cycles before validInput should be asserted.
-const int assertValidInput = (3 * N) + 3;
+const int assertValidInput = ASSERT_VALID_INPUT;
 
 vluint64_t sim_time = 0;
 vluint64_t posedge_cnt = 0;
+// Number of times the output matrix has actually been checked. Used to guard
+// against a vacuous "Test PASS" when the sim ends before any verification.
+unsigned verifyCount = 0;
 
 uint8_t matrixA[N][N];
 uint8_t matrixB[N][N];
@@ -173,6 +185,8 @@ void verifyOutputMatrix(VtopSystolicArray *dut) {
       }
     }
 
+    verifyCount++;
+
     if (incorrect) {
       std::cout << std::endl;
       std::cerr << "ERROR: output matrix received is incorrect." << std::endl;
@@ -225,7 +239,21 @@ int main(int argc, char **argv, char **env) {
   delete dut;
   std::cout << std::endl;
   std::cout << "*******************************************" << std::endl;
-  std::cout << "Test PASS" << std::endl;
+
+  // Guard against a vacuous or under-exercised pass: the sim must complete at
+  // least MIN_VERIFICATIONS result checks, otherwise MAX_SIM_TIME is too small.
+  const unsigned MIN_VERIFICATIONS = 10;
+  if (verifyCount < MIN_VERIFICATIONS) {
+    std::cerr << "ERROR: only " << verifyCount << " of " << MIN_VERIFICATIONS
+              << " required results were verified (MAX_SIM_TIME too small for N="
+              << N << ")." << std::endl;
+    std::cout << "Test FAIL" << std::endl;
+    std::cout << "*******************************************" << std::endl;
+    exit(EXIT_FAILURE);
+  }
+
+  std::cout << "Test PASS (" << std::dec << verifyCount << " matrices verified)"
+            << std::endl;
   std::cout << "*******************************************" << std::endl;
   exit(EXIT_SUCCESS);
 }
