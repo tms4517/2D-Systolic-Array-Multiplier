@@ -179,6 +179,7 @@ void verifyOutputMatrix(VtopSystolicArray *dut) {
       displayMatrix('R', dut);
       std::cout << " simtime: " << (int)sim_time << std::endl;
       std::cout << "*******************************************" << std::endl;
+      std::cout << "Test FAIL" << std::endl;
       exit(EXIT_FAILURE);
     }
   }
@@ -221,5 +222,6 @@ int main(int argc, char **argv, char **env) {
 
   m_trace->close();
   delete dut;
+  std::cout << "Test PASS" << std::endl;
   exit(EXIT_SUCCESS);
 }
