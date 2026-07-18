@@ -13,7 +13,9 @@
 #define RESET_NEG_EDGE 5  // Clk edge number to deassert arst.
 #define VERIF_START_TIME 7
 
-#define N 4 // Square matrix dimension.                       /* Modify this */
+#ifndef N
+#define N 64 // Square matrix dimension. Override via `make all N=<value>`.
+#endif
 #define WIDTH 8
 
 // Max value of an element.

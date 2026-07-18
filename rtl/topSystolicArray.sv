@@ -1,7 +1,7 @@
 `default_nettype none
 
 module topSystolicArray
-  #(parameter int unsigned N = 4)                             /* Modify this */
+  #(parameter int unsigned N = 4)
   ( input  var logic                      i_clk
   , input  var logic                      i_arst
 
