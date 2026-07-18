@@ -180,6 +180,7 @@ void verifyOutputMatrix(VtopSystolicArray *dut) {
       std::cout << " simtime: " << (int)sim_time << std::endl;
       std::cout << "*******************************************" << std::endl;
       std::cout << "Test FAIL" << std::endl;
+      std::cout << "*******************************************" << std::endl;
       exit(EXIT_FAILURE);
     }
   }
@@ -222,6 +223,9 @@ int main(int argc, char **argv, char **env) {
 
   m_trace->close();
   delete dut;
+  std::cout << std::endl;
+  std::cout << "*******************************************" << std::endl;
   std::cout << "Test PASS" << std::endl;
+  std::cout << "*******************************************" << std::endl;
   exit(EXIT_SUCCESS);
 }
